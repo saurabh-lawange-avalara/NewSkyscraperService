@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>Avalara.Skyscraper.Services</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skyscraper.Data\Skyscraper.Data.csproj" />
+    <ProjectReference Include="..\Skyscraper.Models\Skyscraper.Models.csproj" />
+  </ItemGroup>
+
+</Project>
