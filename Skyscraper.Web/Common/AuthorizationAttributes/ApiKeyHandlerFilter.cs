@@ -50,9 +50,9 @@ namespace Avalara.Skyscraper.Web.Common
 
                 if (!string.IsNullOrEmpty(apiKey))
                 {
-                    ServiceModel_ClientAPIKeys obj = new ServiceModel_ClientAPIKeys();
+                    ClientAPIKeysModel obj = new ClientAPIKeysModel();
 
-                    obj = (ServiceModel_ClientAPIKeys)_memoryCache.Get(apiKey);
+                    obj = (ClientAPIKeysModel)_memoryCache.Get(apiKey);
                     if (obj == null)
                     {
                         // service.GetAllSkyscraperUsers();

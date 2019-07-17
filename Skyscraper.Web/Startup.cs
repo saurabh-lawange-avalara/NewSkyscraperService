@@ -1,6 +1,7 @@
 using Avalara.Skyscraper.Data;
 using Avalara.Skyscraper.Services;
 using Avalara.Skyscraper.Web.Common;
+using log4net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,7 @@ namespace Avalara.Skyscraper.Web
             services.AddScoped<IDbConnectionFactory>(e => new DbConnectionFactory(Configuration.GetSection("DBInfo")["ConnectionString"]));
             services.AddScoped<ISkyscraperDataHelper, SkyscraperDataHelper>();
             services.AddScoped<ISkyscraperService, SkyscraperService>();
+            services.AddScoped<ILog>(e => new LoggingService().Initialize("SkyscrapeSvc"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

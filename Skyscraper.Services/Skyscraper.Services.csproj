@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skyscraper.Common\Skyscraper.Common.csproj" />
     <ProjectReference Include="..\Skyscraper.Data\Skyscraper.Data.csproj" />
     <ProjectReference Include="..\Skyscraper.Models\Skyscraper.Models.csproj" />
   </ItemGroup>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Avalara.Skyscraper.Models
 {
-    public partial class ServiceModel_SkyscraperUser
+    public class SkyscraperUserModel
     {
         public int SkyscraperUserId { get; set; }
         public string AvaTaxUserId { get; set; }
@@ -17,6 +17,5 @@ namespace Avalara.Skyscraper.Models
         public DateTime? UpdateDateTime { get; set; }
         public DateTime? LastLoginDateTime { get; set; }
         public string AISubjectId { get; set; }
-
     }
 }

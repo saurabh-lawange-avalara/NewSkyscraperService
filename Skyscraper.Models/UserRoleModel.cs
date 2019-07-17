@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Avalara.Skyscraper.Models
 {
-    public class ServiceModel_UserRole
+    public class UserRoleModel
     {
         public Int32 Id { get; set; }
         public Int32? RoleId { get; set; }

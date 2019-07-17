@@ -42,8 +42,8 @@ namespace Skyscraper.Web.Common.Filters
                 var apivalue = context.HttpContext.Request.Headers.FirstOrDefault(x => x.Key == "apikey").Value;
                 if (!string.IsNullOrEmpty(apivalue) && apivalue.Count() > 0)
                 {
-                    ServiceModel_ClientAPIKeys obj = new ServiceModel_ClientAPIKeys();
-                    obj = (ServiceModel_ClientAPIKeys)_memoryCache.Get(apivalue.FirstOrDefault());
+                    ClientAPIKeysModel obj = new ClientAPIKeysModel();
+                    obj = (ClientAPIKeysModel)_memoryCache.Get(apivalue.FirstOrDefault());
                     if (obj != null)
                     {
                         APICallerContext = obj.ToString();

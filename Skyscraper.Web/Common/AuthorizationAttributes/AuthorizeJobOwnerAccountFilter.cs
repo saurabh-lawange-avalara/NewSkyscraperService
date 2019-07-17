@@ -78,7 +78,7 @@ namespace Avalara.Skyscraper.Web.Common
             }
         }
 
-        public bool IsUserJobOwner(ActionExecutingContext context, ServiceModel_JobOwnerAccountInfo jobOwnerInfo, bool isJobIdList = false)
+        public bool IsUserJobOwner(ActionExecutingContext context, JobOwnerAccountInfoModel jobOwnerInfo, bool isJobIdList = false)
         {
             //check if account id and client id are matching to validate job owner account
             string error = string.Empty;

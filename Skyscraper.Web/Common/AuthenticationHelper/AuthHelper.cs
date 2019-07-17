@@ -28,7 +28,7 @@ namespace Avalara.Skyscraper.Web.Common
             return (SkyscraperDeptId == deptId);
         }
 
-        public ServiceModel_UserRole GetRole(int deptId, string username)
+        public UserRoleModel GetRole(int deptId, string username)
         {
             var userRole = _svcHelper.GetRoleId(deptId, username);
             return userRole;
@@ -55,13 +55,13 @@ namespace Avalara.Skyscraper.Web.Common
             return systemUserNames;            
         }
 
-        public ServiceModel_JobOwnerAccountInfo GetAccountInfoFromJobData(long jobId)
+        public JobOwnerAccountInfoModel GetAccountInfoFromJobData(long jobId)
         {
             var jobOwnerInfo = _svcHelper.GetAccountInfoFromJobData(jobId);
             return jobOwnerInfo;
         }
 
-        public ServiceModel_ClientAPIKeys GetClientAPIKeyObject(string apiKey)
+        public ClientAPIKeysModel GetClientAPIKeyObject(string apiKey)
         {
             return _svcHelper.GetClientAPIKeyObject(apiKey);
         }
@@ -73,7 +73,7 @@ namespace Avalara.Skyscraper.Web.Common
             var roleInfo = GetRole(deptId, user.UserName);
             if (roleInfo == null)
             {
-                ServiceModel_UserRole role = new ServiceModel_UserRole();
+                UserRoleModel role = new UserRoleModel();
                 role.RoleId = (int)Roles.BasicUser;
                 role.SkyscraperUserId = skyscraoerUerId;
                 role.UserName = user.UserName;
@@ -82,7 +82,7 @@ namespace Avalara.Skyscraper.Web.Common
             }
         }
 
-        public int CreateUserRole(ServiceModel_UserRole role)
+        public int CreateUserRole(UserRoleModel role)
         {
             return _svcHelper.InsertUserRole(role);
         }
@@ -100,7 +100,7 @@ namespace Avalara.Skyscraper.Web.Common
 
                 if (skyscraperUser == null)
                 {
-                    skyscraperUser = new ServiceModel_SkyscraperUser()
+                    skyscraperUser = new SkyscraperUserModel()
                     {
                         AvaTaxUserId = userEntity.UserId.ToString(),
                         AvaTaxUserRoleId = userEntity.SecurityRoleId,

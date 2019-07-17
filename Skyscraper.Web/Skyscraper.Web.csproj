@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Skyscraper.Common\Skyscraper.Common.csproj" />
     <ProjectReference Include="..\Skyscraper.Models\Skyscraper.Models.csproj" />
     <ProjectReference Include="..\Skyscraper.Services\Skyscraper.Services.csproj" />
   </ItemGroup>

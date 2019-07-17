@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Avalara.Skyscraper.Models
 {
-    public class ServiceModel_ClientAPIKeys
+    public class ClientAPIKeysModel
     {
         public int Id { get; set; }
         public string APIKey { get; set; }

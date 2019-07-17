@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Avalara.Skyscraper.Models
 {
-    public class ServiceModel_ApiStatus
+    public class ApiStatusResponseModel
     {
         public Int32 Id { get; set; }
 

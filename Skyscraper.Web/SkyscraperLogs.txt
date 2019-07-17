@@ -1,0 +1,6 @@
+AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get ApiStatus,  
+AV-PN-SAURABHL dev-skyscraper-worker : INFO, Got ApiStatus,  
+AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get WebFile Job response by jobId,  
+AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get WebFile Job response by jobId,  
+AV-PN-SAURABHL dev-skyscraper-worker : ERROR, System.Exception: Manual Exception 
+   at Avalara.Skyscraper.Services.SkyscraperService.GetWebFile(Int64 jobId),  

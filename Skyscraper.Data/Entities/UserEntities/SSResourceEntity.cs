@@ -10,5 +10,8 @@ namespace Avalara.Skyscraper.Data.Dapper.Entities
 	partial class SSResource
 	{
 
-	}
+        public string Tags { get; set; }
+
+        public byte[] ImageData { get; set; }
+    }
 }

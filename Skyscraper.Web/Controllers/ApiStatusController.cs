@@ -29,13 +29,13 @@ namespace Avalara.Skyscraper.Web.Controllers
                 //return 404 if no record present for these parameters.
                 if (apiStatus == null || apiStatus.Count == 0)
                 {
-                    return new JsonResult("No record found.") { StatusCode = (int)HttpStatusCode.NotFound };
+                    return GetApiResponse(HttpStatusCode.NotFound, "No record found.");
                 }
-                return new JsonResult(apiStatus);
+                return GetApiResponse(HttpStatusCode.OK, apiStatus);
             }
             catch (Exception ex)
             {
-                return new JsonResult(ex.Message) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                return GetApiResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
     }
