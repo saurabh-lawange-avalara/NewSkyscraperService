@@ -39,6 +39,9 @@
     <Reference Include="Avalara.Authentication">
       <HintPath>..\vendor\avalara\Avalara.Authentication.dll</HintPath>
     </Reference>
+    <Reference Include="Avalara.Returns.Data">
+      <HintPath>..\vendor\avalara\Avalara.Returns.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

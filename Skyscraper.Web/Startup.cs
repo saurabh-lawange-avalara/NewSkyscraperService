@@ -1,4 +1,5 @@
 using Avalara.Skyscraper.Data;
+using Avalara.Skyscraper.Model;
 using Avalara.Skyscraper.Services;
 using Avalara.Skyscraper.Web.Common;
 using log4net;
@@ -44,6 +45,7 @@ namespace Avalara.Skyscraper.Web
         private static void AddServicesInScope(IServiceCollection services)
         {
             services.AddMemoryCache();
+            services.Configure<SkyscraperSvcConfig>(Configuration.GetSection("SkyscraperSvcConfig"));
             services.AddScoped<IDbConnectionFactory>(e => new DbConnectionFactory(Configuration.GetSection("DBInfo")["ConnectionString"]));
             services.AddScoped<ISkyscraperDataHelper, SkyscraperDataHelper>();
             services.AddScoped<ISkyscraperService, SkyscraperService>();

@@ -30,4 +30,21 @@
         LOCATIONREGISTRATION = 8
     }
 
+    public enum OperationStatus
+    {
+        SUCCESS = 1,
+        FAILED = 2,
+        NOTFOUND = 3
+    }
+    public enum FilingFrequency
+    {
+        Monthly = 1,
+        Quarterly = 2,
+        SemiAnnually = 3,
+        Annually = 4,
+        Bimonthly = 5,
+        Occasional = 6,
+        InverseQuarterly = 7
+    }
+
 }

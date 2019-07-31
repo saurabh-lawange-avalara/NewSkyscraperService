@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
 using Avalara.Authentication;
+using Avalara.Skyscraper.Common.Extensions;
 using Avalara.Skyscraper.Models;
 using Avalara.Skyscraper.Services;
-using Avalara.Skyscraper.Web.Common.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 

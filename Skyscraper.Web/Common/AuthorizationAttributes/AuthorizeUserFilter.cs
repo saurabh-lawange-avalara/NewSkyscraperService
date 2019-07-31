@@ -2,10 +2,10 @@
 using System.Net;
 using Avalara.Authentication;
 using Avalara.Skyscraper.Models;
-using Avalara.Skyscraper.Web.Common.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Avalara.Skyscraper.Services;
+using Avalara.Skyscraper.Common.Extensions;
 
 namespace Avalara.Skyscraper.Web.Common
 {

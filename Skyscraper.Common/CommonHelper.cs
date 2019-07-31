@@ -1,4 +1,5 @@
-﻿using Avalara.Skyscraper.Models;
+﻿using Avalara.Skyscraper.Model;
+using Avalara.Skyscraper.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,6 +136,85 @@ namespace Avalara.Skyscraper.Common
                 return temp;
             }
             return temp;
+        }
+
+        public static FilingFrequency GetFilingFrequencyFromCode(string frequencyCode)
+        {
+            if (string.IsNullOrEmpty(frequencyCode))
+            {
+                return 0;
+            }
+
+            switch (frequencyCode)
+            {
+                case "M": return FilingFrequency.Monthly;
+                case "BM": return FilingFrequency.Bimonthly;
+                case "Q": return FilingFrequency.Quarterly;
+                case "SA": return FilingFrequency.SemiAnnually;
+                case "A": return FilingFrequency.Annually;
+                case "O": return FilingFrequency.Occasional;
+                case "IQ": return FilingFrequency.InverseQuarterly;
+                default: return 0;
+            }
+        }
+
+
+        public static bool CheckIfTestJob(Dictionary<string, long> testjobs, string username, string password, string mode, JobType jobTypeId, out long testJobId, out string msg)
+        {
+            bool isTestJobRequest = false;
+            testJobId = 0;
+            msg = string.Empty;
+            string[] arrPassword = { "success", "failure", "exception" };
+            if (!string.IsNullOrEmpty(username) && username.Equals("test", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(password) && arrPassword.Any(e => e.Equals(password, StringComparison.OrdinalIgnoreCase)))
+            {
+                isTestJobRequest = true;
+                if (password.Equals("exception", StringComparison.OrdinalIgnoreCase))
+                {
+                    msg = "Exception occured.Scraper is not available.";
+                }
+                else
+                {
+                    string configKey = string.Empty;
+                    if (mode == null)
+                        configKey = $"{jobTypeId.ToString()}_{password.ToUpper()}";
+                    else
+                        configKey = $"{mode.ToUpper()}_{password.ToUpper()}";
+
+                    try
+                    {
+                        if (testjobs.TryGetValue(configKey, out testJobId) && testJobId > 0)
+                        {
+                            // Do Nothing
+                        }
+                        else
+                        {
+                            msg = "Invalid test Job request.";
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            return isTestJobRequest;
+        }
+
+        public static bool IsWebFileModeAllowed(string mode, AllowedModesOnTest allowedModes)
+        {
+            if (allowedModes.IsFileModeDisabledInTest)
+            {
+                string[] supportedModes = allowedModes.SupportedModesInTest.ToLower().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                if (!supportedModes.Contains(mode, StringComparer.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                //if (!mode.Equals(WebFileMode.REVIEW.ToString(), StringComparison.OrdinalIgnoreCase)||!mode.Equals(WebFileMode.CONFIRMATION.ToString(),StringComparison.OrdinalIgnoreCase))
+                //{
+                //    return false;
+                //}
+            }
+            return true;
         }
 
     }

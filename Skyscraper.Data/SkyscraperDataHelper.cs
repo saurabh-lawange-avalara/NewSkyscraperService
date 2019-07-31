@@ -4,6 +4,7 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Avalara.Skyscraper.Data
 {
@@ -197,5 +198,148 @@ namespace Avalara.Skyscraper.Data
                 return dap.GetByJobId(jobId);
             }
         }
+
+        #region form method handler
+        /// <summary>
+        /// Get status of the form in Skyscraper along with other important metadata required to file a particular 
+        /// form through Skyscraper.
+        /// </summary>
+        /// <returns></returns>
+
+        public List<FormMetaData> GetFormStatus(string taxformcode, string JobTypeClause)
+        {            
+            StringBuilder strQuery = new StringBuilder(string.Format("SET SESSION group_concat_max_len = 1000000; " +
+                    "Select TF.TaxFormId, TF.TaxFormCode, TF.LegacyReturnName, TF.Country, TF.Region,TF.ScraperRegion, TF.IsWebFilingAvailable as IsAvailable, TF.FileUpload, TF.WebfilingAccount, TF.IsDefaultTaxForm, TF.FilingDisabledReason, TF.IsWebfileForm,  " +
+                    "SS.IsAvailable as ScraperStatus, Group_Concat(TBA.BulkAccountId) as StrBulkAccounts, " +
+                    "Group_Concat(TFFM.FilingModeId) as StrFilingModeIds,Group_Concat(TFPM.PaymentModeId) as StrPaymentModeIds, " +
+                    "Group_Concat(TFRC.RequiredFilingCalendarDataFieldId) as StrCalenderFieldIds " +
+                    "FROM TaxForm TF " +
+                    "Join ScraperStatus SS on (SS.ScraperRegion = TF.ScraperRegion and SS.Country = TF.Country and {0}) " +
+                    "Left Outer Join TaxFormBulkAccount TBA on TF.TaxFormId = TBA.TaxFormId " +
+                    "Left outer join TaxFormFilingMode TFFM on TF.TaxFormId=TFFM.TaxFormId " +
+                    "Left outer join TaxFormPaymentMode TFPM on TF.TaxFormId=TFPM.TaxFormId " +
+                    "Left outer join TaxFormRequiredFilingCalendarDataField TFRC on TF.TaxFormId=TFRC.TaxFormId ", JobTypeClause));
+
+            if (!string.IsNullOrEmpty(taxformcode))
+            {
+                strQuery.Append("Where TF.TaxFormCode = '" + taxformcode + "' ");
+            }
+            else
+            {
+                //get all webfiling forms
+                strQuery.Append("Where TF.IsWebfileForm =1");
+            }
+            strQuery.Append(" Group by TF.Taxformcode,TF.ScraperRegion;");
+            List<FormMetaData> list = new List<FormMetaData>();
+            TaxFormDap dap = new TaxFormDap(_connFactory.Connection);
+            list = dap.Query<FormMetaData>(strQuery.ToString()).ToList();
+            
+
+            BulkAccountDap badap = new BulkAccountDap(_connFactory.Connection);
+            var allBulkAccts = badap.GetAll(false);
+
+            FilingModeDap fmdap = new FilingModeDap(_connFactory.Connection);
+            var allFilingModes = fmdap.GetAll(false);
+
+            PaymentModeDap pmdap = new PaymentModeDap(_connFactory.Connection);
+            var allPaymentModes = pmdap.GetAll(false);
+
+            RequiredFilingCalendarDataFieldDap rcddap = new RequiredFilingCalendarDataFieldDap(_connFactory.Connection);
+            var allCalendarFields = rcddap.GetAll(false);
+
+            foreach (var taxForm in list)
+            {
+                try
+                {
+                    //bulkaccounts
+                    if (!string.IsNullOrEmpty(taxForm.StrBulkAccounts))
+                    {
+                        var bulkAccountNameList = new List<string>();
+
+                        foreach (var bulkAcctId in taxForm.StrBulkAccounts.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct())
+                        {
+                            var bulkAccount = allBulkAccts.Where(e => e.BulkAccountId.ToString().Equals(bulkAcctId)).FirstOrDefault();
+                            if (bulkAccount != null)
+                            {
+                                bulkAccountNameList.Add(bulkAccount.Username);
+                            }
+                        }
+                        taxForm.BulkAccounts = bulkAccountNameList.ToArray();
+                    }
+
+                    //filing modes
+                    if (!string.IsNullOrEmpty(taxForm.StrFilingModeIds))
+                    {
+                        var filingModeList = new List<FilingMode>();
+                        foreach (var filingModeId in taxForm.StrFilingModeIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct())
+                        {
+                            var filingMode = allFilingModes.Where(e => e.FilingModeId.ToString().Equals(filingModeId)).FirstOrDefault();
+                            filingModeList.Add(filingMode);
+                        }
+                        taxForm.FilingModes = filingModeList.Select(e => new FilingMode()
+                        {
+                            Name = e.Name,
+                            Description = e.Description
+                        }).ToArray();
+                    }
+
+                    //payment modes
+                    if (!string.IsNullOrEmpty(taxForm.StrPaymentModeIds))
+                    {
+                        var paymentModeList = new List<PaymentMode>();
+                        foreach (var paymentModeId in taxForm.StrPaymentModeIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct())
+                        {
+                            var paymentMode = allPaymentModes.Where(e => e.PaymentModeId.ToString().Equals(paymentModeId)).FirstOrDefault();
+                            paymentModeList.Add(paymentMode);
+                        }
+                        taxForm.PaymentModes = paymentModeList.Select(e => new PaymentMode()
+                        {
+                            Name = e.Name,
+                            Description = e.Description
+                        }).ToArray();
+                    }
+
+                    //calendar fields
+                    if (!string.IsNullOrEmpty(taxForm.StrCalenderFieldIds))
+                    {
+                        var calendarFieldList = new List<RequiredFilingCalendarDataField>();
+                        foreach (var calendarFieldId in taxForm.StrCalenderFieldIds.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Distinct())
+                        {
+                            var calendarField = allCalendarFields.Where(e => e.RequiredFilingCalendarDataFieldId.ToString().Equals(calendarFieldId)).FirstOrDefault();
+                            calendarFieldList.Add(calendarField);
+                        }
+                        taxForm.RequiredFilingCalendarDataFields = calendarFieldList.Select(e => new RequiredFilingCalendarDataField()
+                        {
+                            Name = e.Name,
+                            Description = e.Description
+                        }).ToArray();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(string.Format("Error: TaxFormCode is '{0}' and message = '{1}'", taxForm.LegacyReturnName, ex.Message));
+                }
+            }
+
+            return list;
+        }
+
+        public List<PaymentInfoAdditionalFields> GetPaymentInfoRequiredFields(IEnumerable<string> scraperRegions)
+        {
+            using (PaymentInfoAdditionalFieldsDap dap = new PaymentInfoAdditionalFieldsDap(_connFactory.Connection))
+            {
+                var param = new DynamicParameters();
+                string whereClause = string.Empty;
+
+                if (scraperRegions != null && scraperRegions.Count() > 0)
+                {
+                    param.Add("@regions", scraperRegions.ToArray());
+                    whereClause = "Where ScraperRegion in @regions";
+                }
+                return dap.Query<PaymentInfoAdditionalFields>(string.Format("select * from PaymentInfoAdditionalFields {0}", whereClause), param).ToList();
+            }
+        }
+
+        #endregion
     }
 }

@@ -4,3 +4,6 @@ AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get WebFile Job response by jobI
 AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get WebFile Job response by jobId,  
 AV-PN-SAURABHL dev-skyscraper-worker : ERROR, System.Exception: Manual Exception 
    at Avalara.Skyscraper.Services.SkyscraperService.GetWebFile(Int64 jobId),  
+AV-PN-SAURABHL dev-skyscraper-worker : INFO, In Get WebFile Job response by jobId,  
+AV-PN-SAURABHL dev-skyscraper-worker : ERROR, System.Exception: Manual Exception 
+   at Avalara.Skyscraper.Services.SkyscraperService.GetWebFile(Int64 jobId) in C:\WORK\Scrap\NewSkyscraperService\Skyscraper.Services\SkyscraperService.cs:line 237,  

@@ -3,9 +3,9 @@ using System.Net;
 using Avalara.Authentication;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
-using Avalara.Skyscraper.Web.Common.Extensions;
 using Avalara.Skyscraper.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Avalara.Skyscraper.Common.Extensions;
 
 namespace Avalara.Skyscraper.Web.Common
 {

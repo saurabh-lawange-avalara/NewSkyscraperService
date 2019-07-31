@@ -1,7 +1,7 @@
-﻿using Avalara.Skyscraper.Models;
+﻿using Avalara.Skyscraper.Common.Extensions;
+using Avalara.Skyscraper.Models;
 using Avalara.Skyscraper.Services;
 using Avalara.Skyscraper.Web.Common;
-using Avalara.Skyscraper.Web.Common.Extensions;
 using log4net;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;

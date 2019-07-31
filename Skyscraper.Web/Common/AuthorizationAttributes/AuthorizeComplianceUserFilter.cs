@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using Avalara.Authentication;
-using Avalara.Skyscraper.Web.Common.Extensions;
+using Avalara.Skyscraper.Common.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Avalara.Skyscraper.Web.Common

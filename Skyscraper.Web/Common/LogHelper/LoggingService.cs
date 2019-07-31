@@ -92,7 +92,6 @@ namespace Avalara.Skyscraper.Web.Common
             _logger = getLogger(name);
             GetInstance();
             return _logger;
-
         }
 
 

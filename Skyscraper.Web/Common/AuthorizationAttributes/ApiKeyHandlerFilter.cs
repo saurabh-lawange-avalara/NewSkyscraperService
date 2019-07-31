@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using Avalara.Skyscraper.Models;
 using Avalara.Skyscraper.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Avalara.Skyscraper.Web.Common.Extensions;
+using Avalara.Skyscraper.Common.Extensions;
+using Avalara.Skyscraper.Common.Extensions;
 
 namespace Avalara.Skyscraper.Web.Common
 {

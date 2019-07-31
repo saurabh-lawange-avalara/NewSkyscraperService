@@ -5,4 +5,10 @@
     <RootNamespace>Avalara.Skyscraper.Models</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Avalara.Returns.Data">
+      <HintPath>..\vendor\avalara\Avalara.Returns.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

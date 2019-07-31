@@ -18,5 +18,7 @@ namespace Avalara.Skyscraper.Data
         List<JobStatusInfo> GetJobStatuses(string jobIdList);
         List<SSResource> GetImagesByJob(long jobId);
         WebFileData GetWebFileData(long jobId);
+        List<FormMetaData> GetFormStatus(string taxformcode, string JobTypeClause);
+        List<PaymentInfoAdditionalFields> GetPaymentInfoRequiredFields(IEnumerable<string> scraperRegions);
     }
 }

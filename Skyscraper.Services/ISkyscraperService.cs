@@ -1,4 +1,6 @@
-﻿using Avalara.Skyscraper.Models;
+﻿using Avalara.Authentication;
+using Avalara.Returns.Data;
+using Avalara.Skyscraper.Models;
 using System;
 using System.Collections.Generic;
 
@@ -22,8 +24,15 @@ namespace Avalara.Skyscraper.Services
 
         #region webfile
         WebFileResponseModel GetWebFile(long jobId);
+        JobCreateResponse SetAndCreateWebFileJob(WebFileModel request, UserEntity user, List<FormStatusResponse> formMetaData, int deptid, int clientApiKeyId);
         List<JobStatusMessageModel> GetJobStatuses(string jobIds);
         List<SkyScraperResourceModel> GetImagesByJob(long jobId);
+        ComputedFormData GetCFDFromS3(string fileKey);
+        bool ValidatePaymentInfoKeys(dynamic payment, string skyScraperRegion, out string validationMsg);
+        #endregion
+        #region form
+        List<FormStatusResponse> GetFormStatus(string taxformcode, int JobTypeId = 0);
+
         #endregion
     }
 }

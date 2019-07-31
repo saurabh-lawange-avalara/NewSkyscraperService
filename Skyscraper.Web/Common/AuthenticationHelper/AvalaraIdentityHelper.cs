@@ -1,6 +1,6 @@
 ﻿using Avalara.Authentication;
 using Avalara.AvaTax.RestClient;
-using Avalara.Skyscraper.Web.Common.Extensions;
+using Avalara.Skyscraper.Common.Extensions;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;

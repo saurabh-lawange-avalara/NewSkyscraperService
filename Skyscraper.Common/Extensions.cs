@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Avalara.Skyscraper.Web.Common.Extensions
+namespace Avalara.Skyscraper.Common.Extensions
 {
     public static class Extensions
     {
@@ -61,5 +61,21 @@ namespace Avalara.Skyscraper.Web.Common.Extensions
             httpActionContext.Result = new JsonResult(wrongResult);
             return httpActionContext;
         }
+
+        public static bool CompareValues(this string value, string contents)
+        {
+            //compare multiple strings present in the parent string.send comma(,) seperated strings in contents.
+            bool isSuccess = false;
+            foreach (var content in contents.Split(','))
+            {
+                if (value.IndexOf(content, StringComparison.OrdinalIgnoreCase) >= 0)
+                    isSuccess = true;
+                else
+                    return false;
+
+            }
+            return isSuccess;
+        }
+
     }
 }
